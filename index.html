@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinical Screening Assessment</title>
+    <title>ESA Screening Questionnaire</title>
     <style>
         /* Modern Neurodivergent-Affirming Design Palette */
         :root {
@@ -14,7 +14,6 @@
             --charcoal: #2C3531;
             --white: #FFFFFF;
             --border-color: #D3DDD6;
-            --error-red: #BA4C4C;
         }
 
         * {
@@ -36,7 +35,7 @@
         }
 
         .container {
-            max-width: 680px;
+            max-width: 720px;
             width: 100%;
             background-color: var(--white);
             padding: 40px;
@@ -54,7 +53,7 @@
 
         .header h1 {
             color: var(--sage-dark);
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 600;
             margin-bottom: 8px;
         }
@@ -65,7 +64,7 @@
         }
 
         .form-section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .form-section h2 {
@@ -75,6 +74,8 @@
             letter-spacing: 0.5px;
             margin-bottom: 15px;
             font-weight: 600;
+            border-left: 3px solid var(--sage-green);
+            padding-left: 10px;
         }
 
         .grid-2 {
@@ -95,7 +96,7 @@
             flex-direction: column;
         }
 
-        label {
+        label.field-label {
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 6px;
@@ -103,8 +104,7 @@
         }
 
         input[type="text"],
-        input[type="date"],
-        textarea {
+        input[type="date"] {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -115,18 +115,17 @@
             transition: all 0.2s ease;
         }
 
-        input:focus,
-        textarea:focus {
+        input:focus {
             outline: none;
             border-color: var(--sage-green);
             background-color: var(--white);
             box-shadow: 0 0 0 3px rgba(125, 157, 133, 0.15);
         }
 
-        /* Likert Scale / Question Design */
+        /* Question Layout */
         .question-card {
             background-color: var(--cream-bg);
-            padding: 20px;
+            padding: 22px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
@@ -139,50 +138,58 @@
             color: var(--charcoal);
         }
 
-        .likert-options {
+        .options-vertical {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             gap: 10px;
         }
 
-        .likert-option {
-            flex: 1;
-            text-align: center;
+        .option-item {
+            display: flex;
+            align-items: center;
         }
 
-        .likert-option input[type="radio"] {
+        .option-item input[type="radio"] {
             display: none;
         }
 
-        .likert-option label {
+        .option-item label {
             display: block;
+            width: 100%;
             background-color: var(--white);
             border: 1px solid var(--border-color);
-            padding: 10px 5px;
+            padding: 12px 16px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 400;
             transition: all 0.2s ease;
-            margin-bottom: 0;
-            color: #555;
+            color: #444;
         }
 
-        .likert-option input[type="radio"]:checked + label {
+        .option-item input[type="radio"]:checked + label {
             background-color: var(--sage-green);
             border-color: var(--sage-dark);
             color: var(--white);
-            box-shadow: 0 2px 8px rgba(125, 157, 133, 0.3);
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(125, 157, 133, 0.2);
         }
 
-        .likert-option label:hover {
+        .option-item label:hover {
             border-color: var(--sage-green);
-            background-color: rgba(125, 157, 133, 0.05);
+            background-color: rgba(125, 157, 133, 0.04);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        /* Tracker and Sticky Bottom Bar */
+        .tracker-bar {
+            background-color: var(--sage-light);
+            color: var(--sage-dark);
+            text-align: center;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         /* Submit Button Styling */
@@ -191,13 +198,12 @@
             background-color: var(--sage-green);
             color: var(--white);
             border: none;
-            padding: 15px;
+            padding: 16px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 10px;
             box-shadow: 0 4px 12px rgba(125, 157, 133, 0.2);
         }
 
@@ -237,131 +243,277 @@
 <body>
 
 <div class="container">
-    <!-- Main Form Element linked directly to Formspark -->
     <form id="assessment-form" action="https://submit-form.com/kGO7MlQA0" method="POST" novalidate>
         
-        <!-- Optional Formspark configuration features -->
-        <input type="hidden" name="_error_item_class" value="error" />
-
         <div class="header">
-            <h1>Clinical Screening Questionnaire</h1>
-            <p>Please complete the fields below. All answers are encrypted and delivered securely.</p>
+            <h1>Emotional Support Animal (ESA) Questionnaire</h1>
+            <p>Please complete the clinical screening questions below. Answers are routed securely to your clinician.</p>
         </div>
 
-        <!-- Section 1: Demographics -->
+        <!-- Section: About You -->
         <div class="form-section">
-            <h2>Client Information</h2>
+            <h2>About You</h2>
             
             <div class="form-group">
-                <label for="client_name">Full Name</label>
-                <input type="text" id="client_name" name="client_name" placeholder="First and last name" required>
+                <label class="field-label" for="client_name">Your Name</label>
+                <input type="text" id="client_name" name="client_name" required>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label for="dob">Date of Birth</label>
+                    <label class="field-label" for="dob">Date of Birth</label>
                     <input type="date" id="dob" name="dob" required>
                 </div>
                 <div class="form-group">
-                    <label for="submission_date">Today's Date</label>
+                    <label class="field-label" for="submission_date">Today's Date</label>
                     <input type="date" id="submission_date" name="submission_date" required>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="client_address">Mailing Address</label>
-                <input type="text" id="client_address" name="client_address" placeholder="Street, City, State, Zip" required>
-            </div>
         </div>
 
-        <!-- Section 2: Clinical Screening Questions -->
+        <!-- Section: Your Mental Health -->
         <div class="form-section">
-            <h2>Assessment Questions</h2>
+            <h2>Your Mental Health</h2>
             
-            <!-- Question 1 -->
+            <!-- Q1 -->
             <div class="question-card">
-                <p class="question-text">1. Over the past two weeks, how often have you felt overwhelmed, overstimulated, or completely drained by everyday sensory environments?</p>
-                <div class="likert-options">
-                    <div class="likert-option">
-                        <input type="radio" id="q1-0" name="sensory_overwhelmed" value="0-Never" required>
-                        <label for="q1-0">Never</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q1-1" name="sensory_overwhelmed" value="1-Rarely">
-                        <label for="q1-1">Rarely</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q1-2" name="sensory_overwhelmed" value="2-Sometimes">
-                        <label for="q1-2">Sometimes</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q1-3" name="sensory_overwhelmed" value="3-Often">
-                        <label for="q1-3">Often</label>
-                    </div>
+                <p class="question-text">1. Have you ever been diagnosed with, or do you think you may be experiencing, a mental or emotional health condition? (For example: anxiety, depression, PTSD, ADHD, OCD, panic attacks, or similar.)</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q1-a" name="q1_mh_condition" value="Formal diagnosis" required><label for="q1-a">Yes — I have a formal diagnosis</label></div>
+                    <div class="option-item"><input type="radio" id="q1-b" name="q1_mh_condition" value="Think so, undiagnosed"><label for="q1-b">I think so, but I haven't been formally diagnosed</label></div>
+                    <div class="option-item"><input type="radio" id="q1-c" name="q1_mh_condition" value="No / Not sure"><label for="q1-c">No / I'm not sure</label></div>
                 </div>
             </div>
 
-            <!-- Question 2 -->
+            <!-- Q2 -->
             <div class="question-card">
-                <p class="question-text">2. How often do you find yourself actively masking your natural traits or forcing yourself to mimic neurotypical communication patterns to fit in?</p>
-                <div class="likert-options">
-                    <div class="likert-option">
-                        <input type="radio" id="q2-0" name="masking_frequency" value="0-Never" required>
-                        <label for="q2-0">Never</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q2-1" name="masking_frequency" value="1-Rarely">
-                        <label for="q2-1">Rarely</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q2-2" name="masking_frequency" value="2-Sometimes">
-                        <label for="q2-2">Sometimes</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q2-3" name="masking_frequency" value="3-Often">
-                        <label for="q2-3">Often</label>
-                    </div>
+                <p class="question-text">2. Does your mental or emotional health affect your ability to do everyday things — like working, sleeping, concentrating, taking care of yourself, or spending time with others?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q2-a" name="q2_daily_impact" value="Significant impact" required><label for="q2-a">Yes — it significantly affects my daily life</label></div>
+                    <div class="option-item"><input type="radio" id="q2-b" name="q2_daily_impact" value="Mild/Moderate impact"><label for="q2-b">Somewhat — it has a mild to moderate impact</label></div>
+                    <div class="option-item"><input type="radio" id="q2-c" name="q2_daily_impact" value="Not really"><label for="q2-c">Not really</label></div>
                 </div>
             </div>
 
-            <!-- Question 3 -->
+            <!-- Q3 -->
             <div class="question-card">
-                <p class="question-text">3. How much do your current focus levels, executive functioning, or specialized interests impact your ability to easily switch tasks throughout the day?</p>
-                <div class="likert-options">
-                    <div class="likert-option">
-                        <input type="radio" id="q3-0" name="executive_impact" value="0-No Impact" required>
-                        <label for="q3-0">No Impact</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q3-1" name="executive_impact" value="1-Mild">
-                        <label for="q3-1">Mild</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q3-2" name="executive_impact" value="2-Moderate">
-                        <label for="q3-2">Moderate</label>
-                    </div>
-                    <div class="likert-option">
-                        <input type="radio" id="q3-3" name="executive_impact" value="3-Severe">
-                        <label for="q3-3">Severe</label>
-                    </div>
+                <p class="question-text">3. How would you describe the current severity of your mental health symptoms?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q3-a" name="q3_severity" value="Severe" required><label for="q3-a">Severe — I'm in significant distress a lot of the time</label></div>
+                    <div class="option-item"><input type="radio" id="q3-b" name="q3_severity" value="Moderate"><label for="q3-b">Moderate — noticeable but I manage most days</label></div>
+                    <div class="option-item"><input type="radio" id="q3-c" name="q3_severity" value="Mild"><label for="q3-c">Mild — minimal distress</label></div>
+                    <div class="option-item"><input type="radio" id="q3-d" name="q3_severity" value="No symptoms"><label for="q3-d">I'm not experiencing symptoms right now</label></div>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question-card">
+                <p class="question-text">4. Have you been experiencing these symptoms for 3 months or longer?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q4-a" name="q4_duration" value="Ongoing long time" required><label for="q4-a">Yes — it's been ongoing for a long time</label></div>
+                    <div class="option-item"><input type="radio" id="q4-b" name="q4_duration" value="Comes and goes"><label for="q4-b">It comes and goes in episodes</label></div>
+                    <div class="option-item"><input type="radio" id="q4-c" name="q4_duration" value="Recent"><label for="q4-c">No — this is more recent</label></div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 3: Narrative Notes -->
+        <!-- Section: You & Animals -->
         <div class="form-section">
-            <h2>Additional Notes</h2>
-            <div class="form-group">
-                <label for="clinical_notes">Is there anything else regarding your patterns, context, or triggers you would like to share?</label>
-                <textarea id="clinical_notes" name="client_narrative_notes" placeholder="Feel free to write as much or as little as you prefer..."></textarea>
+            <h2>You & Animals</h2>
+            
+            <!-- Q5 -->
+            <div class="question-card">
+                <p class="question-text">5. When you spend time around animals, do you notice a positive effect on how you feel — like feeling calmer, less anxious, or more grounded?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q5-a" name="q5_animal_effect" value="Clear positive difference" required><label for="q5-a">Yes — I notice a clear positive difference</label></div>
+                    <div class="option-item"><input type="radio" id="q5-b" name="q5_animal_effect" value="Uncertain help"><label for="q5-b">Somewhat — I think it helps but I'm not certain</label></div>
+                    <div class="option-item"><input type="radio" id="q5-c" name="q5_animal_effect" value="No difference"><label for="q5-c">No — I don't notice much difference</label></div>
+                    <div class="option-item"><input type="radio" id="q5-d" name="q5_animal_effect" value="Not enough exposure"><label for="q5-d">I haven't spent much time around animals to know</label></div>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question-card">
+                <p class="question-text">6. Do you have a specific animal in mind that you'd like to have as an Emotional Support Animal, or are you in the process of looking for one?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q6-a" name="q6_specific_animal" value="Already have specific animal" required><label for="q6-a">Yes — I already have a specific animal</label></div>
+                    <div class="option-item"><input type="radio" id="q6-b" name="q6_specific_animal" value="Looking/exploring"><label for="q6-b">I'm looking / exploring options</label></div>
+                    <div class="option-item"><input type="radio" id="q6-c" name="q6_specific_animal" value="Not thought yet"><label for="q6-c">I haven't thought about a specific animal yet</label></div>
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question-card">
+                <p class="question-text">7. Can you describe, in your own mind, how having an Emotional Support Animal would specifically help with your symptoms or daily struggles?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q7-a" name="q7_how_it_helps" value="Clear sense of help" required><label for="q7-a">Yes — I have a clear sense of how it would help me</label></div>
+                    <div class="option-item"><input type="radio" id="q7-b" name="q7_how_it_helps" value="General feeling"><label for="q7-b">Somewhat — I have a general feeling it would help</label></div>
+                    <div class="option-item"><input type="radio" id="q7-c" name="q7_how_it_helps" value="Not sure"><label for="q7-c">Not really — I'm not sure how it would help</label></div>
+                </div>
             </div>
         </div>
 
-        <!-- Submit Trigger -->
-        <button type="submit" class="btn-submit" id="btn-submit" disabled>Submit Assessment Responses →</button>
+        <!-- Section: Your Treatment & Support -->
+        <div class="form-section">
+            <h2>Your Treatment & Support</h2>
+            
+            <!-- Q8 -->
+            <div class="question-card">
+                <p class="question-text">8. Are you currently working with a mental health professional — such as a therapist, counselor, or psychiatrist?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q8-a" name="q8_current_pro" value="Actively in treatment" required><label for="q8-a">Yes — I'm actively in treatment</label></div>
+                    <div class="option-item"><input type="radio" id="q8-b" name="q8_current_pro" value="Inconsistent treatment"><label for="q8-b">Sometimes — I go inconsistently</label></div>
+                    <div class="option-item"><input type="radio" id="q8-c" name="q8_current_pro" value="Not in treatment"><label for="q8-c">No — I'm not currently in treatment</label></div>
+                </div>
+            </div>
+
+            <!-- Q9 -->
+            <div class="question-card">
+                <p class="question-text">9. Do you see an ESA as something that would work alongside your mental health treatment — rather than replacing it?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q9-a" name="q9_alongside_treatment" value="Addition, not substitute" required><label for="q9-a">Yes — I see it as an addition to my care, not a substitute</label></div>
+                    <div class="option-item"><input type="radio" id="q9-b" name="q9_alongside_treatment" value="Want to discuss with clinician"><label for="q9-b">I'm not sure — I'd like to talk to my clinician about this</label></div>
+                    <div class="option-item"><input type="radio" id="q9-c" name="q9_alongside_treatment" value="Might replace treatment"><label for="q9-c">I was thinking it might replace the need for other treatment</label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Housing & Purpose -->
+        <div class="form-section">
+            <h2>Housing & Purpose</h2>
+            
+            <!-- Q10 -->
+            <div class="question-card">
+                <p class="question-text">10. Are you requesting an ESA letter primarily for housing purposes — for example, to live with your animal in a building that has a no-pets policy?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q10-a" name="q10_housing_primary" value="Main reason" required><label for="q10-a">Yes — that's my main reason</label></div>
+                    <div class="option-item"><input type="radio" id="q10-b" name="q10_housing_primary" value="One of several reasons"><label for="q10-b">Partly — housing is one of several reasons</label></div>
+                    <div class="option-item"><input type="radio" id="q10-c" name="q10_housing_primary" value="Another purpose"><label for="q10-c">No — I have another purpose in mind</label></div>
+                </div>
+            </div>
+
+            <!-- Q11 -->
+            <div class="question-card">
+                <p class="question-text">11. Were you aware that an ESA letter only provides protections in housing (under the Fair Housing Act) — and does not give your animal access to public places, restaurants, or flights?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q11-a" name="q11_rights_awareness" value="Understood housing only" required><label for="q11-a">Yes — I understood that</label></div>
+                    <div class="option-item"><input type="radio" id="q11-b" name="q11_rights_awareness" value="Not totally sure"><label for="q11-b">I wasn't totally sure — good to know</label></div>
+                    <div class="option-item"><input type="radio" id="q11-c" name="q11_rights_awareness" value="Thought broader access"><label for="q11-c">No — I thought ESAs had broader access rights</label></div>
+                </div>
+            </div>
+
+            <!-- Q12 -->
+            <div class="question-card">
+                <p class="question-text">12. Were you aware that online-only ESA certificates or "registrations" purchased on the internet are not legally valid in Florida?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q12-a" name="q12_florida_law" value="Knew invalid online" required><label for="q12-a">Yes — I knew that</label></div>
+                    <div class="option-item"><input type="radio" id="q12-b" name="q12_florida_law" value="Was not sure"><label for="q12-b">I wasn't sure</label></div>
+                    <div class="option-item"><input type="radio" id="q12-c" name="q12_florida_law" value="Did not know"><label for="q12-c">No — I didn't know that</label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Caring for an Animal -->
+        <div class="form-section">
+            <h2>Caring for an Animal</h2>
+            
+            <!-- Q13 -->
+            <div class="question-card">
+                <p class="question-text">13. Do you feel you are in a stable enough situation — financially, physically, and in terms of your living situation — to care for an animal?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q13-a" name="q13_care_stability" value="Ready and able" required><label for="q13-a">Yes — I feel ready and able</label></div>
+                    <div class="option-item"><input type="radio" id="q13-b" name="q13_care_stability" value="Mostly, some quirks"><label for="q13-b">Mostly — there are a few things I'd need to work out</label></div>
+                    <div class="option-item"><input type="radio" id="q13-c" name="q13_care_stability" value="Significant barriers"><label for="q13-c">Not quite — I have some significant barriers right now</label></div>
+                </div>
+            </div>
+
+            <!-- Q14 -->
+            <div class="question-card">
+                <p class="question-text">14. Are you aware that as an ESA owner you are financially responsible for any damage your animal causes to a property?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q14-a" name="q14_damage_liability" value="Understand responsibility" required><label for="q14-a">Yes — I understand that responsibility</label></div>
+                    <div class="option-item"><input type="radio" id="q14-b" name="q14_damage_liability" value="General idea"><label for="q14-b">I had a general idea</label></div>
+                    <div class="option-item"><input type="radio" id="q14-c" name="q14_damage_liability" value="Not aware"><label for="q14-c">No — I wasn't aware of that</label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Social & Emotional Wellbeing -->
+        <div class="form-section">
+            <h2>Social & Emotional Wellbeing</h2>
+            
+            <!-- Q15 -->
+            <div class="question-card">
+                <p class="question-text">15. Do you often feel lonely, isolated, or like you don't have enough emotional support in your life?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q15-a" name="q15_loneliness" value="Frequently" required><label for="q15-a">Yes — I feel this way frequently</label></div>
+                    <div class="option-item"><input type="radio" id="q15-b" name="q15_loneliness" value="Sometimes"><label for="q15-b">Sometimes</label></div>
+                    <div class="option-item"><input type="radio" id="q15-c" name="q15_loneliness" value="Feel supported"><label for="q15-c">Not really — I feel supported</label></div>
+                </div>
+            </div>
+
+            <!-- Q16 -->
+            <div class="question-card">
+                <p class="question-text">16. Have animals — pets or otherwise — positively impacted your mental health or emotional state in the past or currently?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q16-a" name="q16_past_impact" value="Definitely noticeable" required><label for="q16-a">Yes — definitely and noticeably</label></div>
+                    <div class="option-item"><input type="radio" id="q16-b" name="q16_past_impact" value="Anecdotally think so"><label for="q16-b">I think so, anecdotally</label></div>
+                    <div class="option-item"><input type="radio" id="q16-c" name="q16_past_impact" value="Not noticed"><label for="q16-c">Not that I've noticed</label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Additional Context -->
+        <div class="form-section">
+            <h2>Additional Context</h2>
+            
+            <!-- Q17 -->
+            <div class="question-card">
+                <p class="question-text">17. Do you currently have a routine or structure in your daily life, or is that something you find difficult to maintain?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q17-a" name="q17_routine_structure" value="Consistent routine" required><label for="q17-a">Yes — I have a fairly consistent routine</label></div>
+                    <div class="option-item"><input type="radio" id="q17-b" name="q17_routine_structure" value="Inconsistent"><label for="q17-b">Somewhat — it's inconsistent</label></div>
+                    <div class="option-item"><input type="radio" id="q17-c" name="q17_routine_structure" value="Struggle completely"><label for="q17-c">No — I really struggle with routine and structure</label></div>
+                </div>
+            </div>
+
+            <!-- Q18 -->
+            <div class="question-card">
+                <p class="question-text">18. Have you experienced trauma, grief, or a significant life stressor that continues to impact your emotional wellbeing?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q18-a" name="q18_trauma_impact" value="Significantly affects still" required><label for="q18-a">Yes — and it significantly affects me still</label></div>
+                    <div class="option-item"><input type="radio" id="q18-b" name="q18_trauma_impact" value="Working through it"><label for="q18-b">Yes — but I'm working through it</label></div>
+                    <div class="option-item"><input type="radio" id="q18-c" name="q18_trauma_impact" value="Not significantly"><label for="q18-c">Not significantly</label></div>
+                </div>
+            </div>
+
+            <!-- Q19 -->
+            <div class="question-card">
+                <p class="question-text">19. How do you feel about your overall mental health right now, and your motivation to improve it?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q19-a" name="q19_motivation" value="Struggling but motivated" required><label for="q19-a">I'm struggling but genuinely motivated to work on it</label></div>
+                    <div class="option-item"><input type="radio" id="q19-b" name="q19_motivation" value="Doing okay, open"><label for="q19-b">I'm doing okay and open to additional support</label></div>
+                    <div class="option-item"><input type="radio" id="q19-c" name="q19_motivation" value="Not sure where I stand"><label for="q19-c">I'm not sure where I stand right now</label></div>
+                </div>
+            </div>
+
+            <!-- Q20 -->
+            <div class="question-card">
+                <p class="question-text">20. Is there anything else you'd like your clinician to know about why you're seeking an Emotional Support Animal, or how you believe it would help you?</p>
+                <div class="options-vertical">
+                    <div class="option-item"><input type="radio" id="q20-a" name="q20_commitment" value="Strong sense, committed" required><label for="q20-a">Yes — I have a strong sense of why this would help me and I'm committed to the process</label></div>
+                    <div class="option-item"><input type="radio" id="q20-b" name="q20_commitment" value="Want to discuss further"><label for="q20-b">Somewhat — I'd like to discuss further with my clinician</label></div>
+                    <div class="option-item"><input type="radio" id="q20-c" name="q20_commitment" value="Still figuring out"><label for="q20-c">I'm still figuring it out</label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Metrics Counter Footer -->
+        <div class="tracker-bar" id="tracker-display">0 of 20 questions answered</div>
+
+        <button type="submit" class="btn-submit" id="btn-submit" disabled>Submit My Responses →</button>
     </form>
 
-    <!-- Visual confirmation layout swapped via script on click -->
     <div id="success-container">
         <h2>🌿 Assessment Submitted</h2>
         <p>Your responses have been securely packaged and delivered directly to your provider. You may safely close this browser window.</p>
@@ -372,36 +524,48 @@
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('assessment-form');
         const submitBtn = document.getElementById('btn-submit');
+        const trackerDisplay = document.getElementById('tracker-display');
         const successContainer = document.getElementById('success-container');
         
-        // Form Validation Logic: Submitting requires all inputs and radio selections to be clicked
-        function validateForm() {
-            const requiredInputs = form.querySelectorAll('input[required]');
-            let allTextFilled = true;
-            
-            requiredInputs.forEach(input => {
-                if (input.type !== 'radio' && !input.value.trim()) {
-                    allTextFilled = false;
-                }
-            });
+        const radioGroups = [
+            'q1_mh_condition', 'q2_daily_impact', 'q3_severity', 'q4_duration',
+            'q5_animal_effect', 'q6_specific_animal', 'q7_how_it_helps', 'q8_current_pro',
+            'q9_alongside_treatment', 'q10_housing_primary', 'q11_rights_awareness', 'q12_florida_law',
+            'q13_care_stability', 'q14_damage_liability', 'q15_loneliness', 'q16_past_impact',
+            'q17_routine_structure', 'q18_trauma_impact', 'q19_motivation', 'q20_commitment'
+        ];
 
-            const radioGroups = ['sensory_overwhelmed', 'masking_frequency', 'executive_impact'];
-            let allRadiosSelected = true;
+        function checkFormProgress() {
+            // Check demographic textual fields
+            const nameFilled = document.getElementById('client_name').value.trim() !== '';
+            const dobFilled = document.getElementById('dob').value !== '';
+            const dateFilled = document.getElementById('submission_date').value !== '';
+            const infoFieldsComplete = nameFilled && dobFilled && dateFilled;
 
+            // Track radio inputs answered
+            let answeredCount = 0;
             radioGroups.forEach(groupName => {
                 const checkedOption = form.querySelector(`input[name="${groupName}"]:checked`);
-                if (!checkedOption) {
-                    allRadiosSelected = false;
+                if (checkedOption) {
+                    answeredCount++;
                 }
             });
 
-            submitBtn.disabled = !(allTextFilled && allRadiosSelected);
+            // Sync visual text counter element
+            trackerDisplay.innerText = `${answeredCount} of 20 questions answered`;
+
+            // Form is fully complete if all 20 radios are checked and details are filled
+            if (answeredCount === 20 && infoFieldsComplete) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
         }
 
-        form.addEventListener('input', validateForm);
-        form.addEventListener('change', validateForm);
+        form.addEventListener('input', checkFormProgress);
+        form.addEventListener('change', checkFormProgress);
 
-        // Smooth handling of asynchronous Formspark dispatch pipeline
+        // Handle submission to Formspark
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             submitBtn.disabled = true;
@@ -422,15 +586,15 @@
                     successContainer.style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                    alert('There was a slight error transmitting your form. Please verify connection and try again.');
+                    alert('There was a slight error transmitting your form. Please verify your connection and try again.');
                     submitBtn.disabled = false;
-                    submitBtn.innerText = 'Submit Assessment Responses →';
+                    submitBtn.innerText = 'Submit My Responses →';
                 }
             })
             .catch(error => {
                 alert('A network exception occurred. Please try again.');
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'Submit Assessment Responses →';
+                submitBtn.innerText = 'Submit My Responses →';
             });
         });
     });
